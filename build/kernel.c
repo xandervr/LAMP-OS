@@ -64,7 +64,7 @@ struct IDT_entry {
 
 struct IDT_entry IDT[IDT_SIZE];
 
-void kmain(void) {
+void main(void) {
 	clear_screen();
 	init_command();
 	clear_command();

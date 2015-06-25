@@ -8,41 +8,41 @@ section .text
 	dd - (0x1BADB002 + 0x00)
 
 global start
-global keyboard_handler
-global read_port
-global write_port
-global write_led
-global load_idt
-global system_halt
+global _keyboard_handler
+global _read_port
+global _write_port
+global _write_led
+global _load_idt
+global _system_halt
 
-extern kmain
-extern keyboard_handler_main
+extern _main
+extern _keyboard_handler_main
 
-read_port:
+_read_port:
 	mov edx, [esp + 4]
 	in al, dx
 	ret
 
-write_port:
+_write_port:
 	mov edx, [esp + 4]
 	mov al, [esp + 4 + 4]
 	out dx, al
 	ret
 
-write_led:
+_write_led:
 
     ret
-load_idt:
+_load_idt:
 	mov edx, [esp + 4]
 	lidt [edx]
 	sti
 	ret
 
-keyboard_handler:
-	call keyboard_handler_main
+_keyboard_handler:
+	call _keyboard_handler_main
 	iretd
 
-system_halt:
+_system_halt:
 	mov ax, 5301h
 	xor bx, bx
 	int 15h
@@ -59,7 +59,7 @@ continue_connection:
 start:
 	cli
 	mov esp, stack_space
-	call kmain
+	call _main
 	hlt
 
 section .bss
